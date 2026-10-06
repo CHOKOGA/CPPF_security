@@ -1,0 +1,10 @@
+# Fichier d'exclusions DevSecAssist (.devsecignore)
+
+# 1. Ignorer des dossiers complets
+demo_app/
+docs/
+scratch/
+*.md
+
+# 2. Ignorer des règles spécifiques
+# rule:SAST-006  # Désactiver la détection du mode DEBUG

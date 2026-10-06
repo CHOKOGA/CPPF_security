@@ -4,6 +4,7 @@ Tests unitaires pour DevSecAssist.
 from pathlib import Path
 from utils.target_detector import TargetDetector
 from utils.risk_calculator import RiskCalculator
+from utils.exclusion_manager import ExclusionManager
 from analyzers.secret_scanner import SecretScanner
 from analyzers.sast_linter import SASTLinter
 from analyzers.config_auditor import ConfigAuditor
@@ -11,11 +12,27 @@ from reporting.json_reporter import JSONReporter, SARIFReporter
 
 def test_secret_scanner(tmp_path: Path):
     test_file = tmp_path / "config.py"
-    test_file.write_text("AWS_KEY = 'AKIAIOSFODNN7EXAMPLE'\n", encoding="utf-8")
+    test_file.write_text("AWS_KEY = 'AKIA1234567890123456'\n", encoding="utf-8")
     
     findings = SecretScanner.scan_directory(tmp_path)
     assert len(findings) >= 1
     assert findings[0]["category"] == "Clé d'API AWS"
+
+def test_inline_ignore(tmp_path: Path):
+    test_file = tmp_path / "config.py"
+    # Ligne ignorée via # devsec-ignore
+    test_file.write_text("AWS_KEY = 'AKIA1234567890123456' # devsec-ignore\n", encoding="utf-8")
+    
+    findings = SecretScanner.scan_directory(tmp_path)
+    assert len(findings) == 0
+
+def test_devsecignore_file(tmp_path: Path):
+    ignore_file = tmp_path / ".devsecignore"
+    ignore_file.write_text("ignored_folder/\nrule:SAST-001\n", encoding="utf-8")
+
+    mgr = ExclusionManager(tmp_path)
+    assert mgr.should_ignore_path(tmp_path / "ignored_folder" / "app.py") is True
+    assert mgr.should_ignore_rule("SAST-001") is True
 
 def test_sast_linter(tmp_path: Path):
     test_file = tmp_path / "app.py"
@@ -40,10 +57,10 @@ def test_risk_calculator():
         {"type": "Config", "category": "Env", "severity": "MOYENNE", "file": ".env", "line": 1}
     ]
     unique = RiskCalculator.deduplicate_findings(findings)
-    assert len(unique) == 2  # Déduplication vérifiée
+    assert len(unique) == 2
 
     score, grade, stats = RiskCalculator.calculate_score(unique)
-    assert score == 78  # 100 - (15 + 7) = 78
+    assert score == 78
     assert "B" in grade
 
 def test_sarif_reporter(tmp_path: Path):

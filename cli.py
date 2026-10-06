@@ -1,6 +1,6 @@
 """
 Interface en ligne de commande (CLI) professionnelle pour DevSecAssist.
-Supporte les sorties HTML, JSON, SARIF, la déduplication et les codes de sortie CI/CD.
+Supporte les sorties HTML, JSON, SARIF, l'ignoration via .devsecignore, et les codes de sortie CI/CD.
 """
 import sys
 import argparse
@@ -10,6 +10,7 @@ from rich.table import Table
 
 from utils.target_detector import TargetDetector
 from utils.risk_calculator import RiskCalculator
+from utils.exclusion_manager import ExclusionManager
 from analyzers.secret_scanner import SecretScanner
 from analyzers.sast_linter import SASTLinter
 from analyzers.header_auditor import HeaderAuditor
@@ -26,6 +27,7 @@ def main():
     parser.add_argument("--url", "-u", default=None, help="URL locale de l'application en cours d'exécution (ex: http://localhost:8000)")
     parser.add_argument("--output", "-o", default="report.html", help="Nom du fichier de rapport généré")
     parser.add_argument("--format", "-f", choices=["html", "json", "sarif"], default="html", help="Format de sortie du rapport (html, json, sarif)")
+    parser.add_argument("--ignore-file", default=".devsecignore", help="Nom du fichier de règles d'ignoration (défaut: .devsecignore)")
     parser.add_argument("--fail-on-high", action="store_true", help="Retourne un code d'erreur non-nul (exit 1) si des alerte de haute sévérité sont trouvées (pour CI/CD)")
     parser.add_argument("--quiet", "-q", action="store_true", help="Mode silencieux (masque l'affichage console)")
 
@@ -35,6 +37,8 @@ def main():
         console.print("\n[bold cyan]🛡️  Lancement de DevSecAssist v0.2.0 - Audit de Sécurité Local[/bold cyan]\n")
 
     project_path = Path(args.path).resolve()
+    exclusion_mgr = ExclusionManager(project_path, ignore_file=args.ignore_file)
+
     raw_findings = []
 
     # 1. Détection du type de projet
@@ -44,14 +48,14 @@ def main():
     if project_info["stacks"] and not args.quiet:
         console.print(f"   ► Stacks détectées : [green]{', '.join(project_info['stacks'])}[/green]")
 
-    # 2. Scans
+    # 2. Scans avec ExclusionManager
     if not args.quiet:
         console.print("   ► Analyse des secrets exposés...")
-    raw_findings.extend(SecretScanner.scan_directory(project_path))
+    raw_findings.extend(SecretScanner.scan_directory(project_path, exclusion_mgr))
 
     if not args.quiet:
         console.print("   ► Analyse statique du code (SAST)...")
-    raw_findings.extend(SASTLinter.analyze_directory(project_path))
+    raw_findings.extend(SASTLinter.analyze_directory(project_path, exclusion_mgr))
 
     if not args.quiet:
         console.print("   ► Audit des fichiers de configuration...")

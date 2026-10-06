@@ -1,10 +1,11 @@
 """
 Module de linter de code statique (SAST - Static Application Security Testing).
-Identifie les règles de codage non sécurisées dans le code source (Python, JavaScript/TypeScript, PHP, HTML).
+Identifie les règles de codage non sécurisées avec gestion avancée du contexte et des exclusions.
 """
 import re
 from pathlib import Path
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
+from utils.exclusion_manager import ExclusionManager
 
 class SASTLinter:
     """Effectue l'analyse statique du code source pour repérer des modèles risqués."""
@@ -60,26 +61,27 @@ class SASTLinter:
         }
     ]
 
-    IGNORE_DIRS = {".git", "venv", ".venv", "node_modules", "__pycache__", "dist", "build"}
-
     @classmethod
-    def analyze_directory(cls, directory: Path) -> List[Dict[str, Any]]:
+    def analyze_directory(cls, directory: Path, exclusion_mgr: Optional[ExclusionManager] = None) -> List[Dict[str, Any]]:
         """Analyse le code source d'un projet à la recherche de modèles non sécurisés."""
         findings = []
 
         if not directory.exists():
             return findings
 
+        if exclusion_mgr is None:
+            exclusion_mgr = ExclusionManager(directory)
+
         for path in directory.rglob("*"):
-            if path.is_file() and not any(part in cls.IGNORE_DIRS for part in path.parts):
-                cls._analyze_file(path, directory, findings)
+            if path.is_file() and not exclusion_mgr.should_ignore_path(path):
+                cls._analyze_file(path, directory, findings, exclusion_mgr)
 
         return findings
 
     @classmethod
-    def _analyze_file(cls, file_path: Path, root_path: Path, findings: List[Dict[str, Any]]):
+    def _analyze_file(cls, file_path: Path, root_path: Path, findings: List[Dict[str, Any]], exclusion_mgr: ExclusionManager):
         ext = file_path.suffix.lower()
-        applicable_rules = [r for r in cls.RULES if ext in r["extensions"]]
+        applicable_rules = [r for r in cls.RULES if ext in r["extensions"] and not exclusion_mgr.should_ignore_rule(r["id"])]
         if not applicable_rules:
             return
 
@@ -88,6 +90,12 @@ class SASTLinter:
                 lines = f.readlines()
 
             for line_idx, line in enumerate(lines, start=1):
+                clean_line = line.strip()
+
+                # Ignorer les lignes de commentaires ou avec # devsec-ignore / # nosec
+                if clean_line.startswith("#") or clean_line.startswith("//") or ExclusionManager.has_inline_ignore(line):
+                    continue
+
                 for rule in applicable_rules:
                     if re.search(rule["pattern"], line):
                         relative_file = str(file_path.relative_to(root_path))
@@ -98,7 +106,7 @@ class SASTLinter:
                             "category": rule["category"],
                             "file": relative_file,
                             "line": line_idx,
-                            "snippet": line.strip()[:120],
+                            "snippet": clean_line[:120],
                             "recommendation": rule["recommendation"]
                         })
         except Exception:

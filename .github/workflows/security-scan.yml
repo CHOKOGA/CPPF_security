@@ -1,0 +1,39 @@
+name: DevSecAssist Security Scan
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  security-audit:
+    name: Run DevSecAssist Local Audit
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      contents: read
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run DevSecAssist Security Audit (SARIF Export)
+        run: |
+          python cli.py --path . --format sarif --output devsec-results.sarif --fail-on-high
+
+      - name: Upload SARIF Results to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: devsec-results.sarif
