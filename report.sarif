@@ -1,0 +1,1048 @@
+{
+  "$schema": "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "DevSecAssist",
+          "version": "0.2.0",
+          "rules": [
+            {
+              "id": "DEVSEC-001",
+              "name": "Clé d'API AWS",
+              "shortDescription": {
+                "text": "Secret Exposé"
+              },
+              "help": {
+                "text": "Stockez les clés et secrets dans des variables d'environnement sécurisées et ne les commitez jamais dans le code source."
+              }
+            },
+            {
+              "id": "DEVSEC-002",
+              "name": "Mot de passe en clair / Secret (assignation)",
+              "shortDescription": {
+                "text": "Secret Exposé"
+              },
+              "help": {
+                "text": "Stockez les clés et secrets dans des variables d'environnement sécurisées et ne les commitez jamais dans le code source."
+              }
+            },
+            {
+              "id": "DEVSEC-003",
+              "name": "Mot de passe en clair / Secret (assignation)",
+              "shortDescription": {
+                "text": "Secret Exposé"
+              },
+              "help": {
+                "text": "Stockez les clés et secrets dans des variables d'environnement sécurisées et ne les commitez jamais dans le code source."
+              }
+            },
+            {
+              "id": "DEVSEC-004",
+              "name": "Mot de passe en clair / Secret (assignation)",
+              "shortDescription": {
+                "text": "Secret Exposé"
+              },
+              "help": {
+                "text": "Stockez les clés et secrets dans des variables d'environnement sécurisées et ne les commitez jamais dans le code source."
+              }
+            },
+            {
+              "id": "DEVSEC-005",
+              "name": "Mot de passe en clair / Secret (assignation)",
+              "shortDescription": {
+                "text": "Secret Exposé"
+              },
+              "help": {
+                "text": "Stockez les clés et secrets dans des variables d'environnement sécurisées et ne les commitez jamais dans le code source."
+              }
+            },
+            {
+              "id": "DEVSEC-006",
+              "name": "Mot de passe en clair / Secret (assignation)",
+              "shortDescription": {
+                "text": "Secret Exposé"
+              },
+              "help": {
+                "text": "Stockez les clés et secrets dans des variables d'environnement sécurisées et ne les commitez jamais dans le code source."
+              }
+            },
+            {
+              "id": "DEVSEC-007",
+              "name": "Mot de passe en clair / Secret (assignation)",
+              "shortDescription": {
+                "text": "Secret Exposé"
+              },
+              "help": {
+                "text": "Stockez les clés et secrets dans des variables d'environnement sécurisées et ne les commitez jamais dans le code source."
+              }
+            },
+            {
+              "id": "DEVSEC-008",
+              "name": "Mot de passe en clair / Secret (assignation)",
+              "shortDescription": {
+                "text": "Secret Exposé"
+              },
+              "help": {
+                "text": "Stockez les clés et secrets dans des variables d'environnement sécurisées et ne les commitez jamais dans le code source."
+              }
+            },
+            {
+              "id": "DEVSEC-009",
+              "name": "Mot de passe en clair / Secret (assignation)",
+              "shortDescription": {
+                "text": "Secret Exposé"
+              },
+              "help": {
+                "text": "Stockez les clés et secrets dans des variables d'environnement sécurisées et ne les commitez jamais dans le code source."
+              }
+            },
+            {
+              "id": "DEVSEC-010",
+              "name": "Mot de passe en clair / Secret (assignation)",
+              "shortDescription": {
+                "text": "Secret Exposé"
+              },
+              "help": {
+                "text": "Stockez les clés et secrets dans des variables d'environnement sécurisées et ne les commitez jamais dans le code source."
+              }
+            },
+            {
+              "id": "DEVSEC-011",
+              "name": "Mot de passe en clair / Secret (assignation)",
+              "shortDescription": {
+                "text": "Secret Exposé"
+              },
+              "help": {
+                "text": "Stockez les clés et secrets dans des variables d'environnement sécurisées et ne les commitez jamais dans le code source."
+              }
+            },
+            {
+              "id": "DEVSEC-012",
+              "name": "Mot de passe en clair / Secret (assignation)",
+              "shortDescription": {
+                "text": "Secret Exposé"
+              },
+              "help": {
+                "text": "Stockez les clés et secrets dans des variables d'environnement sécurisées et ne les commitez jamais dans le code source."
+              }
+            },
+            {
+              "id": "DEVSEC-013",
+              "name": "Mot de passe en clair / Secret (assignation)",
+              "shortDescription": {
+                "text": "Secret Exposé"
+              },
+              "help": {
+                "text": "Stockez les clés et secrets dans des variables d'environnement sécurisées et ne les commitez jamais dans le code source."
+              }
+            },
+            {
+              "id": "DEVSEC-014",
+              "name": "Mot de passe en clair / Secret (assignation)",
+              "shortDescription": {
+                "text": "Secret Exposé"
+              },
+              "help": {
+                "text": "Stockez les clés et secrets dans des variables d'environnement sécurisées et ne les commitez jamais dans le code source."
+              }
+            },
+            {
+              "id": "DEVSEC-015",
+              "name": "Mot de passe en clair / Secret (assignation)",
+              "shortDescription": {
+                "text": "Secret Exposé"
+              },
+              "help": {
+                "text": "Stockez les clés et secrets dans des variables d'environnement sécurisées et ne les commitez jamais dans le code source."
+              }
+            },
+            {
+              "id": "DEVSEC-016",
+              "name": "Mot de passe en clair / Secret (assignation)",
+              "shortDescription": {
+                "text": "Secret Exposé"
+              },
+              "help": {
+                "text": "Stockez les clés et secrets dans des variables d'environnement sécurisées et ne les commitez jamais dans le code source."
+              }
+            },
+            {
+              "id": "DEVSEC-017",
+              "name": "Mot de passe en clair / Secret (assignation)",
+              "shortDescription": {
+                "text": "Secret Exposé"
+              },
+              "help": {
+                "text": "Stockez les clés et secrets dans des variables d'environnement sécurisées et ne les commitez jamais dans le code source."
+              }
+            },
+            {
+              "id": "DEVSEC-018",
+              "name": "Clé d'API AWS",
+              "shortDescription": {
+                "text": "Secret Exposé"
+              },
+              "help": {
+                "text": "Stockez les clés et secrets dans des variables d'environnement sécurisées et ne les commitez jamais dans le code source."
+              }
+            },
+            {
+              "id": "SAST-005",
+              "name": "Rendu HTML brut non sécurisé (dangerouslySetInnerHTML / innerHTML)",
+              "shortDescription": {
+                "text": "Code Non Sécurisé (SAST)"
+              },
+              "help": {
+                "text": "Assurez-vous de neutraliser/échapper le contenu utilisateur avant de l'insérer directement dans le DOM."
+              }
+            },
+            {
+              "id": "SAST-001",
+              "name": "Concaténation SQL potentiellement risquée",
+              "shortDescription": {
+                "text": "Code Non Sécurisé (SAST)"
+              },
+              "help": {
+                "text": "Utilisez systématiquement des requêtes préparées avec paramètres liés pour éviter les injections SQL."
+              }
+            },
+            {
+              "id": "SAST-002",
+              "name": "Exécution dynamique de code (eval/exec)",
+              "shortDescription": {
+                "text": "Code Non Sécurisé (SAST)"
+              },
+              "help": {
+                "text": "Évitez l'utilisation de eval() ou exec(). Privilégiez des structures de données dynamiques sécurisées."
+              }
+            },
+            {
+              "id": "SAST-004",
+              "name": "Désactivation de la vérification TLS/SSL",
+              "shortDescription": {
+                "text": "Code Non Sécurisé (SAST)"
+              },
+              "help": {
+                "text": "Conservez la vérification des certificats TLS pour empêcher les attaques de type Man-in-the-Middle (MitM)."
+              }
+            },
+            {
+              "id": "DEVSEC-036",
+              "name": "Package Python : httpx",
+              "shortDescription": {
+                "text": "Version de Dépendance Non Fixée"
+              },
+              "help": {
+                "text": "Verrouillez les versions de vos dépendances avec '==' (ex: requests==2.31.0) pour garantir la reproductibilité et éviter les régressions de sécurité."
+              }
+            },
+            {
+              "id": "DEVSEC-037",
+              "name": "Package Python : jinja2",
+              "shortDescription": {
+                "text": "Version de Dépendance Non Fixée"
+              },
+              "help": {
+                "text": "Verrouillez les versions de vos dépendances avec '==' (ex: requests==2.31.0) pour garantir la reproductibilité et éviter les régressions de sécurité."
+              }
+            },
+            {
+              "id": "DEVSEC-038",
+              "name": "Package Python : typer",
+              "shortDescription": {
+                "text": "Version de Dépendance Non Fixée"
+              },
+              "help": {
+                "text": "Verrouillez les versions de vos dépendances avec '==' (ex: requests==2.31.0) pour garantir la reproductibilité et éviter les régressions de sécurité."
+              }
+            },
+            {
+              "id": "DEVSEC-039",
+              "name": "Package Python : rich",
+              "shortDescription": {
+                "text": "Version de Dépendance Non Fixée"
+              },
+              "help": {
+                "text": "Verrouillez les versions de vos dépendances avec '==' (ex: requests==2.31.0) pour garantir la reproductibilité et éviter les régressions de sécurité."
+              }
+            },
+            {
+              "id": "DEVSEC-040",
+              "name": "Package Python : pytest",
+              "shortDescription": {
+                "text": "Version de Dépendance Non Fixée"
+              },
+              "help": {
+                "text": "Verrouillez les versions de vos dépendances avec '==' (ex: requests==2.31.0) pour garantir la reproductibilité et éviter les régressions de sécurité."
+              }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "DEVSEC-001",
+          "level": "error",
+          "message": {
+            "text": "Secret Exposé: Clé d'API AWS - Secret masqué : AKIA...MPLE"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "report.html"
+                },
+                "region": {
+                  "startLine": 202
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DEVSEC-002",
+          "level": "error",
+          "message": {
+            "text": "Secret Exposé: Mot de passe en clair / Secret (assignation) - Secret masqué : pass...RD}\""
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "mon1_rapport.html"
+                },
+                "region": {
+                  "startLine": 202
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DEVSEC-003",
+          "level": "error",
+          "message": {
+            "text": "Secret Exposé: Mot de passe en clair / Secret (assignation) - Secret masqué : pass...on['"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "mon1_rapport.html"
+                },
+                "region": {
+                  "startLine": 226
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DEVSEC-004",
+          "level": "error",
+          "message": {
+            "text": "Secret Exposé: Mot de passe en clair / Secret (assignation) - Secret masqué : PASS...RD}'"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "mon1_rapport.html"
+                },
+                "region": {
+                  "startLine": 250
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DEVSEC-005",
+          "level": "error",
+          "message": {
+            "text": "Secret Exposé: Mot de passe en clair / Secret (assignation) - Secret masqué : PASS...RD}'"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "mon1_rapport.html"
+                },
+                "region": {
+                  "startLine": 274
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DEVSEC-006",
+          "level": "error",
+          "message": {
+            "text": "Secret Exposé: Mot de passe en clair / Secret (assignation) - Secret masqué : API_...yz}'"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "mon1_rapport.html"
+                },
+                "region": {
+                  "startLine": 298
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DEVSEC-007",
+          "level": "error",
+          "message": {
+            "text": "Secret Exposé: Mot de passe en clair / Secret (assignation) - Secret masqué : SECR...ET}'"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "mon1_rapport.html"
+                },
+                "region": {
+                  "startLine": 322
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DEVSEC-008",
+          "level": "error",
+          "message": {
+            "text": "Secret Exposé: Mot de passe en clair / Secret (assignation) - Secret masqué : PASS...RD}'"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "mon1_rapport.html"
+                },
+                "region": {
+                  "startLine": 346
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DEVSEC-009",
+          "level": "error",
+          "message": {
+            "text": "Secret Exposé: Mot de passe en clair / Secret (assignation) - Secret masqué : PASS...RD}'"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "mon1_rapport.html"
+                },
+                "region": {
+                  "startLine": 370
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DEVSEC-010",
+          "level": "error",
+          "message": {
+            "text": "Secret Exposé: Mot de passe en clair / Secret (assignation) - Secret masqué : PASS...ord'"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "mon1_rapport.html"
+                },
+                "region": {
+                  "startLine": 394
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DEVSEC-011",
+          "level": "error",
+          "message": {
+            "text": "Secret Exposé: Mot de passe en clair / Secret (assignation) - Secret masqué : PASS...et}'"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "mon1_rapport.html"
+                },
+                "region": {
+                  "startLine": 418
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DEVSEC-012",
+          "level": "error",
+          "message": {
+            "text": "Secret Exposé: Mot de passe en clair / Secret (assignation) - Secret masqué : PASS...et}'"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "mon1_rapport.html"
+                },
+                "region": {
+                  "startLine": 442
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DEVSEC-013",
+          "level": "error",
+          "message": {
+            "text": "Secret Exposé: Mot de passe en clair / Secret (assignation) - Secret masqué : pass...ORD\""
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "mon1_rapport.html"
+                },
+                "region": {
+                  "startLine": 466
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DEVSEC-014",
+          "level": "error",
+          "message": {
+            "text": "Secret Exposé: Mot de passe en clair / Secret (assignation) - Secret masqué : pass...ORD\""
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "mon1_rapport.html"
+                },
+                "region": {
+                  "startLine": 490
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DEVSEC-015",
+          "level": "error",
+          "message": {
+            "text": "Secret Exposé: Mot de passe en clair / Secret (assignation) - Secret masqué : pass...ORD\""
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "mon1_rapport.html"
+                },
+                "region": {
+                  "startLine": 514
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DEVSEC-016",
+          "level": "error",
+          "message": {
+            "text": "Secret Exposé: Mot de passe en clair / Secret (assignation) - Secret masqué : pass...ORD\""
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "mon1_rapport.html"
+                },
+                "region": {
+                  "startLine": 538
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DEVSEC-017",
+          "level": "error",
+          "message": {
+            "text": "Secret Exposé: Mot de passe en clair / Secret (assignation) - Secret masqué : pass...d, '"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "mon1_rapport.html"
+                },
+                "region": {
+                  "startLine": 562
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DEVSEC-018",
+          "level": "error",
+          "message": {
+            "text": "Secret Exposé: Clé d'API AWS - Secret masqué : AKIA...MPLE"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "tests/test_analyzers.py"
+                },
+                "region": {
+                  "startLine": 14
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SAST-005",
+          "level": "warning",
+          "message": {
+            "text": "Code Non Sécurisé (SAST): Rendu HTML brut non sécurisé (dangerouslySetInnerHTML / innerHTML) - "
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "mon1_rapport.html"
+                },
+                "region": {
+                  "startLine": 3597
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SAST-005",
+          "level": "warning",
+          "message": {
+            "text": "Code Non Sécurisé (SAST): Rendu HTML brut non sécurisé (dangerouslySetInnerHTML / innerHTML) - "
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "mon1_rapport.html"
+                },
+                "region": {
+                  "startLine": 3741
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SAST-005",
+          "level": "warning",
+          "message": {
+            "text": "Code Non Sécurisé (SAST): Rendu HTML brut non sécurisé (dangerouslySetInnerHTML / innerHTML) - "
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "mon1_rapport.html"
+                },
+                "region": {
+                  "startLine": 3861
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SAST-005",
+          "level": "warning",
+          "message": {
+            "text": "Code Non Sécurisé (SAST): Rendu HTML brut non sécurisé (dangerouslySetInnerHTML / innerHTML) - "
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "mon1_rapport.html"
+                },
+                "region": {
+                  "startLine": 3909
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SAST-005",
+          "level": "warning",
+          "message": {
+            "text": "Code Non Sécurisé (SAST): Rendu HTML brut non sécurisé (dangerouslySetInnerHTML / innerHTML) - "
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "mon1_rapport.html"
+                },
+                "region": {
+                  "startLine": 4485
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SAST-005",
+          "level": "warning",
+          "message": {
+            "text": "Code Non Sécurisé (SAST): Rendu HTML brut non sécurisé (dangerouslySetInnerHTML / innerHTML) - "
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "mon1_rapport.html"
+                },
+                "region": {
+                  "startLine": 4509
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SAST-005",
+          "level": "warning",
+          "message": {
+            "text": "Code Non Sécurisé (SAST): Rendu HTML brut non sécurisé (dangerouslySetInnerHTML / innerHTML) - "
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "mon1_rapport.html"
+                },
+                "region": {
+                  "startLine": 4533
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SAST-005",
+          "level": "warning",
+          "message": {
+            "text": "Code Non Sécurisé (SAST): Rendu HTML brut non sécurisé (dangerouslySetInnerHTML / innerHTML) - "
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "mon1_rapport.html"
+                },
+                "region": {
+                  "startLine": 4581
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SAST-005",
+          "level": "warning",
+          "message": {
+            "text": "Code Non Sécurisé (SAST): Rendu HTML brut non sécurisé (dangerouslySetInnerHTML / innerHTML) - "
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "mon1_rapport.html"
+                },
+                "region": {
+                  "startLine": 5133
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SAST-005",
+          "level": "warning",
+          "message": {
+            "text": "Code Non Sécurisé (SAST): Rendu HTML brut non sécurisé (dangerouslySetInnerHTML / innerHTML) - "
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "mon1_rapport.html"
+                },
+                "region": {
+                  "startLine": 5146
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SAST-005",
+          "level": "warning",
+          "message": {
+            "text": "Code Non Sécurisé (SAST): Rendu HTML brut non sécurisé (dangerouslySetInnerHTML / innerHTML) - "
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "mon1_rapport.html"
+                },
+                "region": {
+                  "startLine": 5157
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SAST-005",
+          "level": "warning",
+          "message": {
+            "text": "Code Non Sécurisé (SAST): Rendu HTML brut non sécurisé (dangerouslySetInnerHTML / innerHTML) - "
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "mon1_rapport.html"
+                },
+                "region": {
+                  "startLine": 5170
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SAST-005",
+          "level": "warning",
+          "message": {
+            "text": "Code Non Sécurisé (SAST): Rendu HTML brut non sécurisé (dangerouslySetInnerHTML / innerHTML) - "
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "mon1_rapport.html"
+                },
+                "region": {
+                  "startLine": 5181
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SAST-005",
+          "level": "warning",
+          "message": {
+            "text": "Code Non Sécurisé (SAST): Rendu HTML brut non sécurisé (dangerouslySetInnerHTML / innerHTML) - "
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "mon1_rapport.html"
+                },
+                "region": {
+                  "startLine": 5194
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SAST-001",
+          "level": "error",
+          "message": {
+            "text": "Code Non Sécurisé (SAST): Concaténation SQL potentiellement risquée - "
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "tests/test_analyzers.py"
+                },
+                "region": {
+                  "startLine": 22
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SAST-002",
+          "level": "error",
+          "message": {
+            "text": "Code Non Sécurisé (SAST): Exécution dynamique de code (eval/exec) - "
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "analyzers/sast_linter.py"
+                },
+                "region": {
+                  "startLine": 27
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SAST-004",
+          "level": "error",
+          "message": {
+            "text": "Code Non Sécurisé (SAST): Désactivation de la vérification TLS/SSL - "
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "analyzers/header_auditor.py"
+                },
+                "region": {
+                  "startLine": 47
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DEVSEC-036",
+          "level": "note",
+          "message": {
+            "text": "Version de Dépendance Non Fixée: Package Python : httpx - Version non figée : 'httpx>=0.25.0'"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "requirements.txt"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DEVSEC-037",
+          "level": "note",
+          "message": {
+            "text": "Version de Dépendance Non Fixée: Package Python : jinja2 - Version non figée : 'jinja2>=3.1.2'"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "requirements.txt"
+                },
+                "region": {
+                  "startLine": 2
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DEVSEC-038",
+          "level": "note",
+          "message": {
+            "text": "Version de Dépendance Non Fixée: Package Python : typer - Version non figée : 'typer>=0.9.0'"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "requirements.txt"
+                },
+                "region": {
+                  "startLine": 3
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DEVSEC-039",
+          "level": "note",
+          "message": {
+            "text": "Version de Dépendance Non Fixée: Package Python : rich - Version non figée : 'rich>=13.0.0'"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "requirements.txt"
+                },
+                "region": {
+                  "startLine": 4
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DEVSEC-040",
+          "level": "note",
+          "message": {
+            "text": "Version de Dépendance Non Fixée: Package Python : pytest - Version non figée : 'pytest>=7.4.0'"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "requirements.txt"
+                },
+                "region": {
+                  "startLine": 5
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

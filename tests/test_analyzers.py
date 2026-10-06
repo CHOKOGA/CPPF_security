@@ -3,9 +3,11 @@ Tests unitaires pour DevSecAssist.
 """
 from pathlib import Path
 from utils.target_detector import TargetDetector
+from utils.risk_calculator import RiskCalculator
 from analyzers.secret_scanner import SecretScanner
 from analyzers.sast_linter import SASTLinter
 from analyzers.config_auditor import ConfigAuditor
+from reporting.json_reporter import JSONReporter, SARIFReporter
 
 def test_secret_scanner(tmp_path: Path):
     test_file = tmp_path / "config.py"
@@ -30,3 +32,23 @@ def test_config_auditor(tmp_path: Path):
     findings = ConfigAuditor.audit_project(tmp_path)
     assert len(findings) >= 1
     assert findings[0]["type"] == "Fichier .env Décelé dans le Répertoire"
+
+def test_risk_calculator():
+    findings = [
+        {"type": "Secret Exposé", "category": "AWS", "severity": "HAUTE", "file": "app.py", "line": 10},
+        {"type": "Secret Exposé", "category": "AWS", "severity": "HAUTE", "file": "app.py", "line": 10}, # Doublon
+        {"type": "Config", "category": "Env", "severity": "MOYENNE", "file": ".env", "line": 1}
+    ]
+    unique = RiskCalculator.deduplicate_findings(findings)
+    assert len(unique) == 2  # Déduplication vérifiée
+
+    score, grade, stats = RiskCalculator.calculate_score(unique)
+    assert score == 78  # 100 - (15 + 7) = 78
+    assert "B" in grade
+
+def test_sarif_reporter(tmp_path: Path):
+    sarif_file = tmp_path / "results.sarif"
+    findings = [{"type": "Secret", "category": "AWS", "severity": "HAUTE", "file": "main.py", "line": 5}]
+    SARIFReporter.generate_report(findings, sarif_file)
+    assert sarif_file.exists()
+    assert "2.1.0" in sarif_file.read_text(encoding="utf-8")

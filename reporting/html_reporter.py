@@ -1,5 +1,5 @@
 """
-Module de génération de rapports HTML clairs et synthétiques.
+Module de génération de rapports HTML clairs, synthétiques avec score de sécurité.
 """
 from pathlib import Path
 from typing import List, Dict, Any
@@ -45,6 +45,9 @@ HTML_TEMPLATE = """
             border-radius: 12px;
             border: 1px solid var(--border-color);
             margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         h1 {
@@ -56,6 +59,29 @@ HTML_TEMPLATE = """
         .subtitle {
             color: var(--text-secondary);
             margin: 0;
+        }
+
+        .score-box {
+            text-align: center;
+            background: rgba(15, 23, 42, 0.6);
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            border: 2px solid #38bdf8;
+        }
+
+        .score-val {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #38bdf8;
+        }
+
+        .grade-badge {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #f8fafc;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            background: #3b82f6;
         }
 
         .summary-grid {
@@ -162,9 +188,16 @@ HTML_TEMPLATE = """
 <body>
     <div class="container">
         <header>
-            <h1>🛡️ Rapport DevSecAssist</h1>
-            <p class="subtitle">Assistant de Sécurité Local pour Développeurs (Web, Mobile, API)</p>
-            <p style="margin-top: 0.5rem; font-size: 0.9rem;">Projet analysé : <code>{{ target }}</code></p>
+            <div>
+                <h1>🛡️ Rapport DevSecAssist</h1>
+                <p class="subtitle">Assistant de Sécurité Local pour Développeurs (Web, Mobile, API)</p>
+                <p style="margin-top: 0.5rem; font-size: 0.9rem;">Projet analysé : <code>{{ target }}</code></p>
+            </div>
+            <div class="score-box">
+                <div style="font-size: 0.9rem; color: var(--text-secondary);">Score de Sécurité</div>
+                <div class="score-val">{{ score }}/100</div>
+                <div class="grade-badge">{{ grade }}</div>
+            </div>
         </header>
 
         <div class="summary-grid">
@@ -186,7 +219,7 @@ HTML_TEMPLATE = """
             </div>
         </div>
 
-        <h2>Résultats de l'Audit</h2>
+        <h2>Résultats de l'Audit Dédupliqués</h2>
 
         {% if not findings %}
             <div class="finding-card INFO">
@@ -234,17 +267,9 @@ class HTMLReporter:
     """Génère le rapport HTML à partir des résultats d'analyse."""
 
     @classmethod
-    def generate_report(cls, target: str, findings: List[Dict[str, Any]], output_path: Path):
-        """Calcule les statistiques et génère le fichier HTML."""
-        stats = {
-            "high": sum(1 for f in findings if f.get("severity") == "HAUTE"),
-            "med": sum(1 for f in findings if f.get("severity") == "MOYENNE"),
-            "low": sum(1 for f in findings if f.get("severity") == "BASSE"),
-            "total": len(findings)
-        }
-
+    def generate_report(cls, target: str, score: int, grade: str, stats: Dict[str, int], findings: List[Dict[str, Any]], output_path: Path):
         template = Template(HTML_TEMPLATE)
-        html_content = template.render(target=target, findings=findings, stats=stats)
+        html_content = template.render(target=target, score=score, grade=grade, findings=findings, stats=stats)
 
         output_path.parent.mkdir(parents=True, exist_ok=True)
         with open(output_path, "w", encoding="utf-8") as f:

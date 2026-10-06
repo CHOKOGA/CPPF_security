@@ -1,0 +1,413 @@
+{
+  "tool": "DevSecAssist",
+  "version": "0.2.0",
+  "target": "/home/pascal/Bureau/CPPF_security",
+  "summary": {
+    "security_score": 0,
+    "risk_grade": "F (Critique - Risque élevé)",
+    "stats": {
+      "high": 21,
+      "med": 14,
+      "low": 5,
+      "info": 0,
+      "total": 40
+    }
+  },
+  "findings": [
+    {
+      "type": "Secret Exposé",
+      "severity": "HAUTE",
+      "category": "Clé d'API AWS",
+      "file": "report.html",
+      "line": 202,
+      "snippet": "test_file.write_text(\"AWS_KEY = 'AKIAIOSFODNN7EXAMPLE'\\n\", encoding=\"utf-8\")",
+      "evidence": "Secret masqué : AKIA...MPLE",
+      "recommendation": "Stockez les clés et secrets dans des variables d'environnement sécurisées et ne les commitez jamais dans le code source."
+    },
+    {
+      "type": "Secret Exposé",
+      "severity": "HAUTE",
+      "category": "Mot de passe en clair / Secret (assignation)",
+      "file": "mon1_rapport.html",
+      "line": 202,
+      "snippet": "$value = ' --user=\"${:LARAVEL_LOAD_USER}\" --password=\"${:LARAVEL_LOAD_PASSWORD}\"';",
+      "evidence": "Secret masqué : pass...RD}\"",
+      "recommendation": "Stockez les clés et secrets dans des variables d'environnement sécurisées et ne les commitez jamais dans le code source."
+    },
+    {
+      "type": "Secret Exposé",
+      "severity": "HAUTE",
+      "category": "Mot de passe en clair / Secret (assignation)",
+      "file": "mon1_rapport.html",
+      "line": 226,
+      "snippet": "'password' => '--password='.$connection['password'],",
+      "evidence": "Secret masqué : pass...on['",
+      "recommendation": "Stockez les clés et secrets dans des variables d'environnement sécurisées et ne les commitez jamais dans le code source."
+    },
+    {
+      "type": "Secret Exposé",
+      "severity": "HAUTE",
+      "category": "Mot de passe en clair / Secret (assignation)",
+      "file": "mon1_rapport.html",
+      "line": 250,
+      "snippet": "MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'",
+      "evidence": "Secret masqué : PASS...RD}'",
+      "recommendation": "Stockez les clés et secrets dans des variables d'environnement sécurisées et ne les commitez jamais dans le code source."
+    },
+    {
+      "type": "Secret Exposé",
+      "severity": "HAUTE",
+      "category": "Mot de passe en clair / Secret (assignation)",
+      "file": "mon1_rapport.html",
+      "line": 274,
+      "snippet": "MYSQL_PASSWORD: '${DB_PASSWORD}'",
+      "evidence": "Secret masqué : PASS...RD}'",
+      "recommendation": "Stockez les clés et secrets dans des variables d'environnement sécurisées et ne les commitez jamais dans le code source."
+    },
+    {
+      "type": "Secret Exposé",
+      "severity": "HAUTE",
+      "category": "Mot de passe en clair / Secret (assignation)",
+      "file": "mon1_rapport.html",
+      "line": 298,
+      "snippet": "TYPESENSE_API_KEY: '${TYPESENSE_API_KEY:-xyz}'",
+      "evidence": "Secret masqué : API_...yz}'",
+      "recommendation": "Stockez les clés et secrets dans des variables d'environnement sécurisées et ne les commitez jamais dans le code source."
+    },
+    {
+      "type": "Secret Exposé",
+      "severity": "HAUTE",
+      "category": "Mot de passe en clair / Secret (assignation)",
+      "file": "mon1_rapport.html",
+      "line": 322,
+      "snippet": "SOKETI_DEFAULT_APP_SECRET: '${PUSHER_APP_SECRET}'",
+      "evidence": "Secret masqué : SECR...ET}'",
+      "recommendation": "Stockez les clés et secrets dans des variables d'environnement sécurisées et ne les commitez jamais dans le code source."
+    },
+    {
+      "type": "Secret Exposé",
+      "severity": "HAUTE",
+      "category": "Mot de passe en clair / Secret (assignation)",
+      "file": "mon1_rapport.html",
+      "line": 346,
+      "snippet": "MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'",
+      "evidence": "Secret masqué : PASS...RD}'",
+      "recommendation": "Stockez les clés et secrets dans des variables d'environnement sécurisées et ne les commitez jamais dans le code source."
+    },
+    {
+      "type": "Secret Exposé",
+      "severity": "HAUTE",
+      "category": "Mot de passe en clair / Secret (assignation)",
+      "file": "mon1_rapport.html",
+      "line": 370,
+      "snippet": "MYSQL_PASSWORD: '${DB_PASSWORD}'",
+      "evidence": "Secret masqué : PASS...RD}'",
+      "recommendation": "Stockez les clés et secrets dans des variables d'environnement sécurisées et ne les commitez jamais dans le code source."
+    },
+    {
+      "type": "Secret Exposé",
+      "severity": "HAUTE",
+      "category": "Mot de passe en clair / Secret (assignation)",
+      "file": "mon1_rapport.html",
+      "line": 394,
+      "snippet": "MINIO_ROOT_PASSWORD: 'password'",
+      "evidence": "Secret masqué : PASS...ord'",
+      "recommendation": "Stockez les clés et secrets dans des variables d'environnement sécurisées et ne les commitez jamais dans le code source."
+    },
+    {
+      "type": "Secret Exposé",
+      "severity": "HAUTE",
+      "category": "Mot de passe en clair / Secret (assignation)",
+      "file": "mon1_rapport.html",
+      "line": 418,
+      "snippet": "PGPASSWORD: '${DB_PASSWORD:-secret}'",
+      "evidence": "Secret masqué : PASS...et}'",
+      "recommendation": "Stockez les clés et secrets dans des variables d'environnement sécurisées et ne les commitez jamais dans le code source."
+    },
+    {
+      "type": "Secret Exposé",
+      "severity": "HAUTE",
+      "category": "Mot de passe en clair / Secret (assignation)",
+      "file": "mon1_rapport.html",
+      "line": 442,
+      "snippet": "POSTGRES_PASSWORD: '${DB_PASSWORD:-secret}'",
+      "evidence": "Secret masqué : PASS...et}'",
+      "recommendation": "Stockez les clés et secrets dans des variables d'environnement sécurisées et ne les commitez jamais dans le code source."
+    },
+    {
+      "type": "Secret Exposé",
+      "severity": "HAUTE",
+      "category": "Mot de passe en clair / Secret (assignation)",
+      "file": "mon1_rapport.html",
+      "line": 466,
+      "snippet": "/usr/bin/mariadb --user=root --password=\"$MYSQL_ROOT_PASSWORD\" <<-EOSQL",
+      "evidence": "Secret masqué : pass...ORD\"",
+      "recommendation": "Stockez les clés et secrets dans des variables d'environnement sécurisées et ne les commitez jamais dans le code source."
+    },
+    {
+      "type": "Secret Exposé",
+      "severity": "HAUTE",
+      "category": "Mot de passe en clair / Secret (assignation)",
+      "file": "mon1_rapport.html",
+      "line": 490,
+      "snippet": "/usr/bin/mariadb --user=root --password=\"$MYSQL_ROOT_PASSWORD\" <<-EOSQL",
+      "evidence": "Secret masqué : pass...ORD\"",
+      "recommendation": "Stockez les clés et secrets dans des variables d'environnement sécurisées et ne les commitez jamais dans le code source."
+    },
+    {
+      "type": "Secret Exposé",
+      "severity": "HAUTE",
+      "category": "Mot de passe en clair / Secret (assignation)",
+      "file": "mon1_rapport.html",
+      "line": 514,
+      "snippet": "mysql --user=root --password=\"$MYSQL_ROOT_PASSWORD\" <<-EOSQL",
+      "evidence": "Secret masqué : pass...ORD\"",
+      "recommendation": "Stockez les clés et secrets dans des variables d'environnement sécurisées et ne les commitez jamais dans le code source."
+    },
+    {
+      "type": "Secret Exposé",
+      "severity": "HAUTE",
+      "category": "Mot de passe en clair / Secret (assignation)",
+      "file": "mon1_rapport.html",
+      "line": 538,
+      "snippet": "mysql --user=root --password=\"$MYSQL_ROOT_PASSWORD\" <<-EOSQL",
+      "evidence": "Secret masqué : pass...ORD\"",
+      "recommendation": "Stockez les clés et secrets dans des variables d'environnement sécurisées et ne les commitez jamais dans le code source."
+    },
+    {
+      "type": "Secret Exposé",
+      "severity": "HAUTE",
+      "category": "Mot de passe en clair / Secret (assignation)",
+      "file": "mon1_rapport.html",
+      "line": 562,
+      "snippet": "$content = str_replace('_password='.$encodedPassword, '_password=******', $content);",
+      "evidence": "Secret masqué : pass...d, '",
+      "recommendation": "Stockez les clés et secrets dans des variables d'environnement sécurisées et ne les commitez jamais dans le code source."
+    },
+    {
+      "type": "Secret Exposé",
+      "severity": "HAUTE",
+      "category": "Clé d'API AWS",
+      "file": "tests/test_analyzers.py",
+      "line": 14,
+      "snippet": "test_file.write_text(\"AWS_KEY = 'AKIAIOSFODNN7EXAMPLE'\\n\", encoding=\"utf-8\")",
+      "evidence": "Secret masqué : AKIA...MPLE",
+      "recommendation": "Stockez les clés et secrets dans des variables d'environnement sécurisées et ne les commitez jamais dans le code source."
+    },
+    {
+      "id": "SAST-005",
+      "type": "Code Non Sécurisé (SAST)",
+      "severity": "MOYENNE",
+      "category": "Rendu HTML brut non sécurisé (dangerouslySetInnerHTML / innerHTML)",
+      "file": "mon1_rapport.html",
+      "line": 3597,
+      "snippet": "<h3 class=\"finding-title\">Code Non Sécurisé (SAST) - Rendu HTML brut non sécurisé (dangerouslySetInnerHTML / innerHTML)<",
+      "recommendation": "Assurez-vous de neutraliser/échapper le contenu utilisateur avant de l'insérer directement dans le DOM."
+    },
+    {
+      "id": "SAST-005",
+      "type": "Code Non Sécurisé (SAST)",
+      "severity": "MOYENNE",
+      "category": "Rendu HTML brut non sécurisé (dangerouslySetInnerHTML / innerHTML)",
+      "file": "mon1_rapport.html",
+      "line": 3741,
+      "snippet": "<h3 class=\"finding-title\">Code Non Sécurisé (SAST) - Rendu HTML brut non sécurisé (dangerouslySetInnerHTML / innerHTML)<",
+      "recommendation": "Assurez-vous de neutraliser/échapper le contenu utilisateur avant de l'insérer directement dans le DOM."
+    },
+    {
+      "id": "SAST-005",
+      "type": "Code Non Sécurisé (SAST)",
+      "severity": "MOYENNE",
+      "category": "Rendu HTML brut non sécurisé (dangerouslySetInnerHTML / innerHTML)",
+      "file": "mon1_rapport.html",
+      "line": 3861,
+      "snippet": "<h3 class=\"finding-title\">Code Non Sécurisé (SAST) - Rendu HTML brut non sécurisé (dangerouslySetInnerHTML / innerHTML)<",
+      "recommendation": "Assurez-vous de neutraliser/échapper le contenu utilisateur avant de l'insérer directement dans le DOM."
+    },
+    {
+      "id": "SAST-005",
+      "type": "Code Non Sécurisé (SAST)",
+      "severity": "MOYENNE",
+      "category": "Rendu HTML brut non sécurisé (dangerouslySetInnerHTML / innerHTML)",
+      "file": "mon1_rapport.html",
+      "line": 3909,
+      "snippet": "<h3 class=\"finding-title\">Code Non Sécurisé (SAST) - Rendu HTML brut non sécurisé (dangerouslySetInnerHTML / innerHTML)<",
+      "recommendation": "Assurez-vous de neutraliser/échapper le contenu utilisateur avant de l'insérer directement dans le DOM."
+    },
+    {
+      "id": "SAST-005",
+      "type": "Code Non Sécurisé (SAST)",
+      "severity": "MOYENNE",
+      "category": "Rendu HTML brut non sécurisé (dangerouslySetInnerHTML / innerHTML)",
+      "file": "mon1_rapport.html",
+      "line": 4485,
+      "snippet": "<h3 class=\"finding-title\">Code Non Sécurisé (SAST) - Rendu HTML brut non sécurisé (dangerouslySetInnerHTML / innerHTML)<",
+      "recommendation": "Assurez-vous de neutraliser/échapper le contenu utilisateur avant de l'insérer directement dans le DOM."
+    },
+    {
+      "id": "SAST-005",
+      "type": "Code Non Sécurisé (SAST)",
+      "severity": "MOYENNE",
+      "category": "Rendu HTML brut non sécurisé (dangerouslySetInnerHTML / innerHTML)",
+      "file": "mon1_rapport.html",
+      "line": 4509,
+      "snippet": "<h3 class=\"finding-title\">Code Non Sécurisé (SAST) - Rendu HTML brut non sécurisé (dangerouslySetInnerHTML / innerHTML)<",
+      "recommendation": "Assurez-vous de neutraliser/échapper le contenu utilisateur avant de l'insérer directement dans le DOM."
+    },
+    {
+      "id": "SAST-005",
+      "type": "Code Non Sécurisé (SAST)",
+      "severity": "MOYENNE",
+      "category": "Rendu HTML brut non sécurisé (dangerouslySetInnerHTML / innerHTML)",
+      "file": "mon1_rapport.html",
+      "line": 4533,
+      "snippet": "<h3 class=\"finding-title\">Code Non Sécurisé (SAST) - Rendu HTML brut non sécurisé (dangerouslySetInnerHTML / innerHTML)<",
+      "recommendation": "Assurez-vous de neutraliser/échapper le contenu utilisateur avant de l'insérer directement dans le DOM."
+    },
+    {
+      "id": "SAST-005",
+      "type": "Code Non Sécurisé (SAST)",
+      "severity": "MOYENNE",
+      "category": "Rendu HTML brut non sécurisé (dangerouslySetInnerHTML / innerHTML)",
+      "file": "mon1_rapport.html",
+      "line": 4581,
+      "snippet": "<h3 class=\"finding-title\">Code Non Sécurisé (SAST) - Rendu HTML brut non sécurisé (dangerouslySetInnerHTML / innerHTML)<",
+      "recommendation": "Assurez-vous de neutraliser/échapper le contenu utilisateur avant de l'insérer directement dans le DOM."
+    },
+    {
+      "id": "SAST-005",
+      "type": "Code Non Sécurisé (SAST)",
+      "severity": "MOYENNE",
+      "category": "Rendu HTML brut non sécurisé (dangerouslySetInnerHTML / innerHTML)",
+      "file": "mon1_rapport.html",
+      "line": 5133,
+      "snippet": "<h3 class=\"finding-title\">Code Non Sécurisé (SAST) - Rendu HTML brut non sécurisé (dangerouslySetInnerHTML / innerHTML)<",
+      "recommendation": "Assurez-vous de neutraliser/échapper le contenu utilisateur avant de l'insérer directement dans le DOM."
+    },
+    {
+      "id": "SAST-005",
+      "type": "Code Non Sécurisé (SAST)",
+      "severity": "MOYENNE",
+      "category": "Rendu HTML brut non sécurisé (dangerouslySetInnerHTML / innerHTML)",
+      "file": "mon1_rapport.html",
+      "line": 5146,
+      "snippet": "tabNavigationItem.innerHTML = tabTitle;",
+      "recommendation": "Assurez-vous de neutraliser/échapper le contenu utilisateur avant de l'insérer directement dans le DOM."
+    },
+    {
+      "id": "SAST-005",
+      "type": "Code Non Sécurisé (SAST)",
+      "severity": "MOYENNE",
+      "category": "Rendu HTML brut non sécurisé (dangerouslySetInnerHTML / innerHTML)",
+      "file": "mon1_rapport.html",
+      "line": 5157,
+      "snippet": "<h3 class=\"finding-title\">Code Non Sécurisé (SAST) - Rendu HTML brut non sécurisé (dangerouslySetInnerHTML / innerHTML)<",
+      "recommendation": "Assurez-vous de neutraliser/échapper le contenu utilisateur avant de l'insérer directement dans le DOM."
+    },
+    {
+      "id": "SAST-005",
+      "type": "Code Non Sécurisé (SAST)",
+      "severity": "MOYENNE",
+      "category": "Rendu HTML brut non sécurisé (dangerouslySetInnerHTML / innerHTML)",
+      "file": "mon1_rapport.html",
+      "line": 5170,
+      "snippet": "toggle.innerHTML = currentContent !== altContent ? altContent : originalContent;",
+      "recommendation": "Assurez-vous de neutraliser/échapper le contenu utilisateur avant de l'insérer directement dans le DOM."
+    },
+    {
+      "id": "SAST-005",
+      "type": "Code Non Sécurisé (SAST)",
+      "severity": "MOYENNE",
+      "category": "Rendu HTML brut non sécurisé (dangerouslySetInnerHTML / innerHTML)",
+      "file": "mon1_rapport.html",
+      "line": 5181,
+      "snippet": "<h3 class=\"finding-title\">Code Non Sécurisé (SAST) - Rendu HTML brut non sécurisé (dangerouslySetInnerHTML / innerHTML)<",
+      "recommendation": "Assurez-vous de neutraliser/échapper le contenu utilisateur avant de l'insérer directement dans le DOM."
+    },
+    {
+      "id": "SAST-005",
+      "type": "Code Non Sécurisé (SAST)",
+      "severity": "MOYENNE",
+      "category": "Rendu HTML brut non sécurisé (dangerouslySetInnerHTML / innerHTML)",
+      "file": "mon1_rapport.html",
+      "line": 5194,
+      "snippet": "option.innerHTML = '<em>(none)</em>';",
+      "recommendation": "Assurez-vous de neutraliser/échapper le contenu utilisateur avant de l'insérer directement dans le DOM."
+    },
+    {
+      "id": "SAST-001",
+      "type": "Code Non Sécurisé (SAST)",
+      "severity": "HAUTE",
+      "category": "Concaténation SQL potentiellement risquée",
+      "file": "tests/test_analyzers.py",
+      "line": 22,
+      "snippet": "test_file.write_text(\"query = f'SELECT * FROM users WHERE name = {user_input}'\\n\", encoding=\"utf-8\")",
+      "recommendation": "Utilisez systématiquement des requêtes préparées avec paramètres liés pour éviter les injections SQL."
+    },
+    {
+      "id": "SAST-002",
+      "type": "Code Non Sécurisé (SAST)",
+      "severity": "HAUTE",
+      "category": "Exécution dynamique de code (eval/exec)",
+      "file": "analyzers/sast_linter.py",
+      "line": 27,
+      "snippet": "\"recommendation\": \"Évitez l'utilisation de eval() ou exec(). Privilégiez des structures de données dynamiques sécurisées",
+      "recommendation": "Évitez l'utilisation de eval() ou exec(). Privilégiez des structures de données dynamiques sécurisées."
+    },
+    {
+      "id": "SAST-004",
+      "type": "Code Non Sécurisé (SAST)",
+      "severity": "HAUTE",
+      "category": "Désactivation de la vérification TLS/SSL",
+      "file": "analyzers/header_auditor.py",
+      "line": 47,
+      "snippet": "with httpx.Client(verify=False, timeout=timeout, follow_redirects=True) as client:",
+      "recommendation": "Conservez la vérification des certificats TLS pour empêcher les attaques de type Man-in-the-Middle (MitM)."
+    },
+    {
+      "type": "Version de Dépendance Non Fixée",
+      "severity": "BASSE",
+      "category": "Package Python : httpx",
+      "file": "requirements.txt",
+      "line": 1,
+      "evidence": "Version non figée : 'httpx>=0.25.0'",
+      "recommendation": "Verrouillez les versions de vos dépendances avec '==' (ex: requests==2.31.0) pour garantir la reproductibilité et éviter les régressions de sécurité."
+    },
+    {
+      "type": "Version de Dépendance Non Fixée",
+      "severity": "BASSE",
+      "category": "Package Python : jinja2",
+      "file": "requirements.txt",
+      "line": 2,
+      "evidence": "Version non figée : 'jinja2>=3.1.2'",
+      "recommendation": "Verrouillez les versions de vos dépendances avec '==' (ex: requests==2.31.0) pour garantir la reproductibilité et éviter les régressions de sécurité."
+    },
+    {
+      "type": "Version de Dépendance Non Fixée",
+      "severity": "BASSE",
+      "category": "Package Python : typer",
+      "file": "requirements.txt",
+      "line": 3,
+      "evidence": "Version non figée : 'typer>=0.9.0'",
+      "recommendation": "Verrouillez les versions de vos dépendances avec '==' (ex: requests==2.31.0) pour garantir la reproductibilité et éviter les régressions de sécurité."
+    },
+    {
+      "type": "Version de Dépendance Non Fixée",
+      "severity": "BASSE",
+      "category": "Package Python : rich",
+      "file": "requirements.txt",
+      "line": 4,
+      "evidence": "Version non figée : 'rich>=13.0.0'",
+      "recommendation": "Verrouillez les versions de vos dépendances avec '==' (ex: requests==2.31.0) pour garantir la reproductibilité et éviter les régressions de sécurité."
+    },
+    {
+      "type": "Version de Dépendance Non Fixée",
+      "severity": "BASSE",
+      "category": "Package Python : pytest",
+      "file": "requirements.txt",
+      "line": 5,
+      "evidence": "Version non figée : 'pytest>=7.4.0'",
+      "recommendation": "Verrouillez les versions de vos dépendances avec '==' (ex: requests==2.31.0) pour garantir la reproductibilité et éviter les régressions de sécurité."
+    }
+  ]
+}
