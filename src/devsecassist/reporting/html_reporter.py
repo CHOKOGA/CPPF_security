@@ -1,9 +1,9 @@
 """
-Module de génération de rapports HTML clairs, synthétiques avec score de sécurité.
+Module de génération de rapports HTML clairs et synthétiques (HTMLReporter).
 """
 from pathlib import Path
-from typing import List, Dict, Any
 from jinja2 import Template
+from devsecassist.models import ScanResult
 
 HTML_TEMPLATE = """
 <!DOCTYPE html>
@@ -152,6 +152,15 @@ HTML_TEMPLATE = """
         .badge.BASSE { background-color: rgba(59, 130, 246, 0.2); color: var(--low-color); }
         .badge.INFO { background-color: rgba(16, 185, 129, 0.2); color: var(--info-color); }
 
+        .badge-conf {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #cbd5e1;
+            font-size: 0.75rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            margin-left: 0.5rem;
+        }
+
         .meta {
             font-size: 0.9rem;
             color: var(--text-secondary);
@@ -189,49 +198,52 @@ HTML_TEMPLATE = """
     <div class="container">
         <header>
             <div>
-                <h1>🛡️ Rapport DevSecAssist</h1>
+                <h1>🛡️ Rapport DevSecAssist v0.3.0</h1>
                 <p class="subtitle">Assistant de Sécurité Local pour Développeurs (Web, Mobile, API)</p>
-                <p style="margin-top: 0.5rem; font-size: 0.9rem;">Projet analysé : <code>{{ target }}</code></p>
+                <p style="margin-top: 0.5rem; font-size: 0.9rem;">Projet analysé : <code>{{ result.target }}</code></p>
             </div>
             <div class="score-box">
                 <div style="font-size: 0.9rem; color: var(--text-secondary);">Score de Sécurité</div>
-                <div class="score-val">{{ score }}/100</div>
-                <div class="grade-badge">{{ grade }}</div>
+                <div class="score-val">{{ result.score }}/100</div>
+                <div class="grade-badge">{{ result.risk_grade }}</div>
             </div>
         </header>
 
         <div class="summary-grid">
             <div class="summary-card">
                 <div>Haute Sévérité</div>
-                <div class="number high">{{ stats.high }}</div>
+                <div class="number high">{{ result.stats.high }}</div>
             </div>
             <div class="summary-card">
                 <div>Moyenne Sévérité</div>
-                <div class="number med">{{ stats.med }}</div>
+                <div class="number med">{{ result.stats.med }}</div>
             </div>
             <div class="summary-card">
                 <div>Basse Sévérité</div>
-                <div class="number low">{{ stats.low }}</div>
+                <div class="number low">{{ result.stats.low }}</div>
             </div>
             <div class="summary-card">
                 <div>Total Alertes</div>
-                <div class="number total">{{ stats.total }}</div>
+                <div class="number total">{{ result.stats.total }}</div>
             </div>
         </div>
 
-        <h2>Résultats de l'Audit Dédupliqués</h2>
+        <h2>Résultats de l'Audit Normalisés</h2>
 
-        {% if not findings %}
+        {% if not result.findings %}
             <div class="finding-card INFO">
                 <p>✨ Aucune alerte de sécurité détectée ! Le projet respecte les règles vérifiées.</p>
             </div>
         {% endif %}
 
-        {% for finding in findings %}
-            <div class="finding-card {{ finding.severity }}">
+        {% for finding in result.findings %}
+            <div class="finding-card {{ finding.severity.value }}">
                 <div class="finding-header">
-                    <h3 class="finding-title">{{ finding.type }} - {{ finding.category }}</h3>
-                    <span class="badge {{ finding.severity }}">{{ finding.severity }}</span>
+                    <h3 class="finding-title">
+                        {{ finding.title }} - {{ finding.category }}
+                        <span class="badge-conf">Confiance : {{ finding.confidence.value }}</span>
+                    </h3>
+                    <span class="badge {{ finding.severity.value }}">{{ finding.severity.value }}</span>
                 </div>
                 
                 <div class="meta">
@@ -256,7 +268,7 @@ HTML_TEMPLATE = """
         {% endfor %}
 
         <footer>
-            Généré automatiquement par DevSecAssist - Assistant de Sécurité Défensif Local
+            Généré automatiquement par DevSecAssist v0.3.0
         </footer>
     </div>
 </body>
@@ -264,12 +276,12 @@ HTML_TEMPLATE = """
 """
 
 class HTMLReporter:
-    """Génère le rapport HTML à partir des résultats d'analyse."""
+    """Génère le rapport HTML à partir du ScanResult."""
 
     @classmethod
-    def generate_report(cls, target: str, score: int, grade: str, stats: Dict[str, int], findings: List[Dict[str, Any]], output_path: Path):
+    def generate_report(cls, scan_result: ScanResult, output_path: Path):
         template = Template(HTML_TEMPLATE)
-        html_content = template.render(target=target, score=score, grade=grade, findings=findings, stats=stats)
+        html_content = template.render(result=scan_result)
 
         output_path.parent.mkdir(parents=True, exist_ok=True)
         with open(output_path, "w", encoding="utf-8") as f:

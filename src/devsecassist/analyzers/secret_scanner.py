@@ -1,13 +1,14 @@
 """
-Module de détection de secrets et clés d'accès exposées dans le code source et les configurations.
-Intègre le filtrage avancé des faux positifs et la gestion des exclusions inline.
+Module de détection de secrets et clés d'accès exposées (SecretScanner).
 """
 import re
 from pathlib import Path
-from typing import List, Dict, Any, Optional
-from utils.exclusion_manager import ExclusionManager
+from typing import List, Optional
+from devsecassist.models import Finding, Severity, Confidence
+from devsecassist.utils.exclusion_manager import ExclusionManager
+from devsecassist.analyzers.base import BaseAnalyzer
 
-class SecretScanner:
+class SecretScanner(BaseAnalyzer):
     """Analyseur de secrets et données sensibles codées en dur."""
 
     PATTERNS = {
@@ -20,7 +21,6 @@ class SecretScanner:
         "Chaîne de connexion Base de données": r"(?i)(mongodb|postgres|postgresql|mysql|redis)://[a-zA-Z0-9_]+:[^@\s]+@[a-zA-Z0-9_.-]+:[0-9]+",
     }
 
-    # Placeholders explicites pour éviter les faux positifs
     EXACT_PLACEHOLDERS = {
         "AKIAIOSFODNN7EXAMPLE", "YOUR_API_KEY", "SECRET_KEY", "CHANGE_ME",
         "MY_SECRET", "DUMMY_TOKEN", "TEST_KEY", "YOUR_SECRET_HERE"
@@ -28,11 +28,8 @@ class SecretScanner:
 
     IGNORE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".gif", ".ico", ".pdf", ".zip", ".tar", ".gz", ".pyc", ".exe", ".so", ".dll", ".sarif"}
 
-    @classmethod
-    def scan_directory(cls, directory: Path, exclusion_mgr: Optional[ExclusionManager] = None) -> List[Dict[str, Any]]:
-        """Parcourt un dossier et recherche d'éventuels secrets exposés."""
-        findings = []
-
+    def analyze(self, directory: Path, exclusion_mgr: Optional[ExclusionManager] = None) -> List[Finding]:
+        findings: List[Finding] = []
         if not directory.exists():
             return findings
 
@@ -43,16 +40,14 @@ class SecretScanner:
             if path.is_file():
                 if exclusion_mgr.should_ignore_path(path):
                     continue
-                if path.suffix.lower() in cls.IGNORE_EXTENSIONS:
+                if path.suffix.lower() in self.IGNORE_EXTENSIONS:
                     continue
 
-                cls._scan_file(path, directory, findings, exclusion_mgr)
+                self._scan_file(path, directory, findings, exclusion_mgr)
 
         return findings
 
-    @classmethod
-    def _scan_file(cls, file_path: Path, root_path: Path, findings: List[Dict[str, Any]], exclusion_mgr: ExclusionManager):
-        """Analyse un fichier ligne par ligne à la recherche de secrets."""
+    def _scan_file(self, file_path: Path, root_path: Path, findings: List[Finding], exclusion_mgr: ExclusionManager):
         try:
             with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
                 lines = f.readlines()
@@ -61,27 +56,29 @@ class SecretScanner:
                 if ExclusionManager.has_inline_ignore(line):
                     continue
 
-                for label, pattern in cls.PATTERNS.items():
+                for label, pattern in self.PATTERNS.items():
                     matches = re.finditer(pattern, line)
                     for match in matches:
                         matched_str = match.group(0)
 
-                        # Verification exacte de placeholder
-                        if matched_str in cls.EXACT_PLACEHOLDERS or "EXAMPLE" in matched_str.upper():
+                        if matched_str in self.EXACT_PLACEHOLDERS or "EXAMPLE" in matched_str.upper():
                             continue
 
                         masked = matched_str[:4] + "..." + matched_str[-4:] if len(matched_str) > 8 else "***"
-                        
                         relative_file = str(file_path.relative_to(root_path))
-                        findings.append({
-                            "type": "Secret Exposé",
-                            "severity": "HAUTE",
-                            "category": label,
-                            "file": relative_file,
-                            "line": line_idx,
-                            "snippet": line.strip()[:120],
-                            "evidence": f"Secret masqué : {masked}",
-                            "recommendation": "Stockez les clés et secrets dans des variables d'environnement sécurisées et ne les commitez jamais dans le code source."
-                        })
+
+                        findings.append(Finding(
+                            id="SEC-001",
+                            title="Secret Exposé",
+                            category=label,
+                            severity=Severity.HAUTE,
+                            confidence=Confidence.HIGH,
+                            file=relative_file,
+                            line=line_idx,
+                            snippet=line.strip()[:120],
+                            evidence=f"Secret masqué : {masked}",
+                            recommendation="Stockez les clés et secrets dans des variables d'environnement sécurisées et ne les commitez jamais dans le code source.",
+                            source="SecretScanner"
+                        ))
         except Exception:
             pass

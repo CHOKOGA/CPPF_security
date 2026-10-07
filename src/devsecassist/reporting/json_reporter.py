@@ -1,25 +1,25 @@
 """
-Générateur de rapports au format JSON et SARIF (Standard OASIS pour CI/CD et GitHub Security).
+Générateur de rapports JSON et SARIF v2.1.0 à partir d'objets ScanResult typés.
 """
 import json
 from pathlib import Path
-from typing import List, Dict, Any
+from devsecassist.models import ScanResult, Severity
 
 class JSONReporter:
-    """Exportation des alertes de sécurité au format JSON structuré."""
+    """Exportation au format JSON structuré."""
 
     @staticmethod
-    def generate_report(target: str, score: int, grade: str, stats: Dict[str, int], findings: List[Dict[str, Any]], output_path: Path):
+    def generate_report(scan_result: ScanResult, output_path: Path):
         data = {
             "tool": "DevSecAssist",
-            "version": "0.2.0",
-            "target": target,
+            "version": "0.3.0",
             "summary": {
-                "security_score": score,
-                "risk_grade": grade,
-                "stats": stats
+                "target": scan_result.target,
+                "security_score": scan_result.score,
+                "risk_grade": scan_result.risk_grade,
+                "stats": scan_result.stats
             },
-            "findings": findings
+            "findings": [f.to_dict() for f in scan_result.findings]
         }
         output_path.parent.mkdir(parents=True, exist_ok=True)
         with open(output_path, "w", encoding="utf-8") as f:
@@ -27,45 +27,44 @@ class JSONReporter:
 
 
 class SARIFReporter:
-    """Exportation au format SARIF v2.1.0 pour intégration native GitHub Code Scanning."""
+    """Exportation au format SARIF v2.1.0 (Standard OASIS pour GitHub Code Scanning)."""
 
     @staticmethod
-    def generate_report(findings: List[Dict[str, Any]], output_path: Path):
+    def generate_report(scan_result: ScanResult, output_path: Path):
         rules = []
         results = []
         rule_ids = set()
 
         severity_map = {
-            "HAUTE": "error",
-            "MOYENNE": "warning",
-            "BASSE": "note",
-            "INFO": "note"
+            Severity.HAUTE: "error",
+            Severity.MOYENNE: "warning",
+            Severity.BASSE: "note",
+            Severity.INFO: "note"
         }
 
-        for idx, f in enumerate(findings):
-            rule_id = f.get("id", f"DEVSEC-{idx+1:03d}")
+        for idx, f in enumerate(scan_result.findings):
+            rule_id = f.id or f"DEVSEC-{idx+1:03d}"
             if rule_id not in rule_ids:
                 rule_ids.add(rule_id)
                 rules.append({
                     "id": rule_id,
-                    "name": f.get("category", "Security Check"),
-                    "shortDescription": {"text": f.get("type", "Security Finding")},
-                    "help": {"text": f.get("recommendation", "")}
+                    "name": f.category or "Security Check",
+                    "shortDescription": {"text": f.title},
+                    "help": {"text": f.recommendation}
                 })
 
             result = {
                 "ruleId": rule_id,
-                "level": severity_map.get(f.get("severity"), "warning"),
-                "message": {"text": f"{f.get('type')}: {f.get('category')} - {f.get('evidence', '')}"},
+                "level": severity_map.get(f.severity, "warning"),
+                "message": {"text": f"{f.title}: {f.category} - {f.evidence or ''}"},
                 "locations": []
             }
 
-            file_path = f.get("file")
-            if file_path:
+            if f.file:
                 result["locations"].append({
                     "physicalLocation": {
-                        "artifactLocation": {"uri": file_path},
-                        "region": {"startLine": f.get("line", 1)}
+                        "artifactLocation": {"uri": f.file},
+                        "region": {"startLine": f.line or 1}
                     }
                 })
 
@@ -79,7 +78,7 @@ class SARIFReporter:
                     "tool": {
                         "driver": {
                             "name": "DevSecAssist",
-                            "version": "0.2.0",
+                            "version": "0.3.0",
                             "rules": rules
                         }
                     },

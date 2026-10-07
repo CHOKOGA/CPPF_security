@@ -21,7 +21,6 @@ class TargetDetector:
         if not project_path.exists() or not project_path.is_dir():
             return detected
 
-        # Fichiers caractéristiques
         indicators = {
             "package.json": ("Web/NodeJS", "is_web"),
             "requirements.txt": ("Python App", "is_web"),
@@ -38,8 +37,7 @@ class TargetDetector:
 
         for file_name, (stack_name, category) in indicators.items():
             matches = list(project_path.glob(f"**/{file_name}"))
-            # Ignorer venv et node_modules
-            valid_matches = [m for m in matches if not any(p in m.parts for p in ["venv", ".venv", "node_modules", ".git"])]
+            valid_matches = [m for m in matches if not any(p in m.parts for p in ["venv", ".venv", "node_modules", ".git", "dist", "build"])]
             if valid_matches:
                 detected[category] = True
                 detected["stacks"].append(stack_name)

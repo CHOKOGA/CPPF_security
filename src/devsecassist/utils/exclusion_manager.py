@@ -1,9 +1,9 @@
 """
-Gestionnaire d'exclusions et de règles d'ignoration (.devsecignore et commentaires inline).
+Gestionnaire d'exclusions (.devsecignore & annotations inline).
 """
 import fnmatch
 from pathlib import Path
-from typing import List, Set, Optional
+from typing import Set, Optional
 
 class ExclusionManager:
     """Gère l'exclusion de fichiers, répertoires et règles spécifiques."""
@@ -21,7 +21,6 @@ class ExclusionManager:
         self._load_ignore_file(self.root_dir / ignore_file)
 
     def _load_ignore_file(self, ignore_path: Path):
-        """Lit et interprète le fichier .devsecignore s'il existe."""
         if not ignore_path.exists():
             return
 
@@ -33,18 +32,15 @@ class ExclusionManager:
                         continue
                     
                     if clean.startswith("rule:"):
-                        # Ignorer une règle spécifique (ex: rule:SAST-001)
                         rule_id = clean.split("rule:")[1].strip()
                         self.ignored_rules.add(rule_id)
                     else:
-                        # Nettoyer les slashes finaux
                         pattern = clean.rstrip("/")
                         self.ignore_patterns.add(pattern)
         except Exception:
             pass
 
     def should_ignore_path(self, path: Path) -> bool:
-        """Vérifie si un chemin de fichier/dossier doit être ignoré."""
         try:
             relative_path = path.relative_to(self.root_dir)
             relative_parts = relative_path.parts
@@ -63,13 +59,11 @@ class ExclusionManager:
         return False
 
     def should_ignore_rule(self, rule_id: Optional[str]) -> bool:
-        """Vérifie si une règle d'analyse spécifique a été désactivée."""
         if not rule_id:
             return False
         return rule_id in self.ignored_rules
 
     @staticmethod
     def has_inline_ignore(line_content: str) -> bool:
-        """Vérifie la présence d'un commentaire d'ignoration inline (ex: # devsec-ignore ou # nosec)."""
         lower = line_content.lower()
         return "devsec-ignore" in lower or "nosec" in lower or "fmt: skip" in lower

@@ -4,19 +4,25 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "devsecassist"
-version = "0.2.0"
-description = "Assistant de Sécurité Local pour Développeurs"
+version = "0.3.0"
+description = "Assistant de Sécurité Local pour Développeurs (Web, Mobile, API)"
 readme = "README.md"
 requires-python = ">=3.10"
+authors = [
+    { name = "Pascal Patipe", email = "pascalpatipe@gmail.cm" }
+]
 dependencies = [
     "httpx>=0.25.0",
     "jinja2>=3.1.2",
     "rich>=13.0.0",
 ]
 
+[project.scripts]
+devsecassist = "devsecassist.cli:main"
+
 [tool.setuptools.packages.find]
-where = ["."]
+where = ["src"]
 
 [tool.pytest.ini_options]
-pythonpath = ["."]
+pythonpath = ["src"]
 testpaths = ["tests"]
