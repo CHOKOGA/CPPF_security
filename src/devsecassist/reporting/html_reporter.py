@@ -279,10 +279,15 @@ class HTMLReporter:
     """Génère le rapport HTML à partir du ScanResult."""
 
     @classmethod
-    def generate_report(cls, scan_result: ScanResult, output_path: Path):
+    def render_html(cls, scan_result: ScanResult) -> str:
+        """Rend le contenu HTML sous forme de chaîne de caractères."""
         template = Template(HTML_TEMPLATE)
-        html_content = template.render(result=scan_result)
+        return template.render(result=scan_result)
 
+    @classmethod
+    def generate_report(cls, scan_result: ScanResult, output_path: Path):
+        """Écrit le rapport HTML dans un fichier."""
+        html_content = cls.render_html(scan_result)
         output_path.parent.mkdir(parents=True, exist_ok=True)
         with open(output_path, "w", encoding="utf-8") as f:
             f.write(html_content)

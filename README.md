@@ -1,68 +1,182 @@
-# 🛡️ DevSecAssist - Assistant de Sécurité Local pour Développeurs
+# 🛡️ DevSecAssist v0.3.0 — Assistant de Sécurité Local & API Web
 
-**DevSecAssist** est une application Python modulaire conçue pour aider les développeurs à identifier et corriger les faiblesses de sécurité dans leurs projets **Web, Mobiles (Android/iOS) et API** avant le déploiement.
+**DevSecAssist** est un outil de sécurité défensif modulaire conçu pour aider les développeurs à identifier et corriger les faiblesses de sécurité dans leurs projets **Web, Mobiles (Android/iOS), API et Containers** — avant le déploiement.
 
-L'outil adopte une approche **défensive et passive** (SAST, Secret Scanning, Configuration Auditing, Header Auditing) garantissant une exécution sûre sans risque d'impact sur l'environnement de développement local.
-
----
-
-## 🚀 Fonctionnalités
-
-1. **Analyse Statique du Code (SAST)** :
-   - Détection des requêtes SQL dynamiques/concaténées.
-   - Utilisation de fonctions risquées (`eval()`, `exec()`).
-   - Algorithmes de hachage obsolètes (`MD5`, `SHA1`).
-   - Injection HTML brute (`innerHTML`, `dangerouslySetInnerHTML`).
-
-2. **Détection de Secrets (Secret Scanning)** :
-   - Clés d'API (AWS, Slack, GitHub).
-   - Jetons JWT et clés privées RSA.
-   - Mots de passe et chaînes de connexion codés en dur.
-
-3. **Audit des Configurations (Web, Mobile, Containers)** :
-   - Présence de fichiers `.env` non ignorés.
-   - Mobile Android : `allowBackup`, `usesCleartextTraffic`, composants exportés non protégés.
-   - Mobile iOS : `NSAllowsArbitraryLoads` (ATS).
-   - Docker : Absence d'instruction `USER` (exécution root).
-
-4. **Audit des Dépendances (SCA)** :
-   - Détection de packages obsolètes ou vulnérables connus (`pycrypto`, `node-serialize`).
-   - Versions non verrouillées.
-
-5. **Audit Passif HTTP / Cookies** :
-   - Vérification des en-têtes HTTP de sécurité (`CSP`, `X-Frame-Options`, `Referrer-Policy`).
-   - Audit des attributs de cookies (`HttpOnly`, `Secure`, `SameSite`).
-
-6. **Rapports HTML Interactifs** :
-   - Génération d'un rapport clair catégorisé par sévérité avec conseils de correction guidés.
+Il s'utilise aussi bien en **CLI locale** qu'en tant que **service web public (API REST)** hébergé sur Render, Railway ou un VPS.
 
 ---
 
-## 🛠️ Installation
+## 🏗️ Architecture du Projet
+
+```
+CPPF_security/
+├── app.py                          # API Web FastAPI (service public)
+├── render.yaml                     # Configuration Render.com
+├── requirements.txt                # Dépendances Python
+├── pyproject.toml                  # Packaging standard (PEP 517/518)
+├── .devsecignore                   # Règles d'exclusion d'analyse
+├── .github/workflows/
+│   └── security-scan.yml          # CI/CD GitHub Actions avec export SARIF
+├── src/
+│   └── devsecassist/
+│       ├── __init__.py             # Version du package
+│       ├── models.py               # Dataclasses typées : Finding, ScanResult, Severity, Confidence
+│       ├── engine.py               # ScanEngine — Orchestrateur central
+│       ├── cli.py                  # Interface CLI (python -m devsecassist.cli)
+│       ├── utils/
+│       │   ├── target_detector.py  # Détection de la stack (Web, Mobile, API)
+│       │   ├── exclusion_manager.py # Gestion .devsecignore & ignoration inline
+│       │   └── risk_calculator.py  # Score de risque (0-100) & déduplication
+│       ├── analyzers/
+│       │   ├── base.py             # Interface abstraite BaseAnalyzer
+│       │   ├── secret_scanner.py   # Secrets codés en dur (Clés API, JWT, DB)
+│       │   ├── sast_linter.py      # Analyse statique SAST (SQL, eval, MD5, SSL)
+│       │   ├── header_auditor.py   # Audit passif des en-têtes HTTP & cookies
+│       │   ├── config_auditor.py   # Config Android/iOS/Docker/.env
+│       │   └── dependency_auditor.py # SCA — Audit des manifests de dépendances
+│       └── reporting/
+│           ├── html_reporter.py    # Rapport HTML interactif
+│           └── json_reporter.py    # Export JSON & SARIF v2.1.0
+└── tests/
+    ├── conftest.py
+    └── test_analyzers.py           # Suite de tests unitaires (7 tests)
+```
+
+---
+
+## 🚀 Installation
 
 ```bash
-# 1. Cloner le projet
+git clone https://github.com/VOTRE_USERNAME/CPPF_security.git
 cd CPPF_security
-
-# 2. Installer les dépendances
 pip install -r requirements.txt
 ```
 
 ---
 
-## 💻 Utilisation
+## 💻 Utilisation CLI
 
-### Analyser le répertoire du projet courant :
 ```bash
-python cli.py --path .
+# Analyser le projet courant (sortie HTML)
+PYTHONPATH=src python3 -m devsecassist.cli --path . --output report.html
+
+# Analyser un projet + une application web locale
+PYTHONPATH=src python3 -m devsecassist.cli --path . --url http://localhost:3000
+
+# Exporter en JSON
+PYTHONPATH=src python3 -m devsecassist.cli --path . --format json --output report.json
+
+# Exporter en SARIF (GitHub Code Scanning)
+PYTHONPATH=src python3 -m devsecassist.cli --path . --format sarif --output report.sarif
+
+# Mode CI/CD — Échec si sévérité HAUTE détectée
+PYTHONPATH=src python3 -m devsecassist.cli --path . --fail-on-high --quiet
 ```
 
-### Analyser le projet + l'application en cours d'exécution locale :
+---
+
+## 🌐 API Web (Service Public)
+
+### Démarrage local
+
 ```bash
-python cli.py --path . --url http://localhost:8000
+PYTHONPATH=src python3 -m uvicorn app:app --host 0.0.0.0 --port 8000
 ```
 
-### Exécuter les tests unitaires :
+### Endpoints
+
+| Endpoint       | Méthode | Description                                      |
+|----------------|---------|--------------------------------------------------|
+| `/health`      | GET     | Vérification de santé du service                 |
+| `/scan/url`    | GET     | Audit HTTP passif d'une URL (`?url=http://...`)  |
+| `/scan/file`   | POST    | Analyse d'un fichier ou archive `.zip` uploadé   |
+| `/docs`        | GET     | Documentation Swagger UI automatique (FastAPI)   |
+
+### Exemples de requêtes
+
 ```bash
-pytest tests/
+# 1. Vérification de santé
+curl http://localhost:8000/health
+
+# 2. Audit d'une URL locale
+curl "http://localhost:8000/scan/url?url=http://localhost:3000&format=json"
+
+# 3. Scan d'un fichier Python
+curl -X POST "http://localhost:8000/scan/file?format=json" \
+     -F "file=@./app.py"
+
+# 4. Scan d'une archive ZIP de projet (format HTML)
+curl -X POST "http://localhost:8000/scan/file?format=html" \
+     -F "file=@./mon_projet.zip" > rapport.html
 ```
+
+### Sécurisation par Clé API
+
+```bash
+# Définir une clé API via variable d'environnement
+export API_KEY="ma_cle_secrete"
+
+# Requête authentifiée
+curl -X POST "http://localhost:8000/scan/file?format=json" \
+     -H "X-API-Key: ma_cle_secrete" \
+     -F "file=@./app.py"
+```
+
+---
+
+## ☁️ Déploiement sur Render.com
+
+1. Poussez ce dépôt sur GitHub.
+2. Sur [render.com](https://render.com), créez un **Web Service**.
+3. Liez votre dépôt GitHub.
+4. Configurez :
+   - **Build Command** : `pip install -r requirements.txt`
+   - **Start Command** : `uvicorn app:app --host 0.0.0.0 --port $PORT`
+5. Ajoutez la variable d'environnement `API_KEY` dans les paramètres Render.
+6. Votre API sera disponible sur `https://votre-service.onrender.com`.
+
+Le fichier [`render.yaml`](render.yaml) automatise cette configuration.
+
+---
+
+## 🔧 Exclusions Personnalisées
+
+Créez un fichier `.devsecignore` à la racine du projet à analyser :
+
+```ini
+# Ignorer un dossier entier
+docs/
+demo_app/
+
+# Ignorer un type de fichier
+*.md
+
+# Désactiver une règle spécifique
+rule:SAST-006
+```
+
+Ajoutez `# devsec-ignore` ou `# nosec` en fin de ligne pour exclure une ligne spécifique.
+
+---
+
+## 🧪 Tests
+
+```bash
+python3 -m pytest -q
+# Résultat attendu : 7 passed
+```
+
+---
+
+## ⚠️ Limites Connues
+
+- Les règles SAST utilisent des regex (sans AST) — certains faux positifs sont possibles.
+- L'audit HTTP est **passif** (pas d'injection ni de test actif).
+- La vérification des dépendances est basée sur une liste statique — pas d'interrogation live de CVE.
+- Les archives `.zip` uploadées ne peuvent pas dépasser les limites mémoire du serveur.
+
+---
+
+## 📄 Licence
+
+Ce projet est développé à des fins pédagogiques et d'usage interne. Usage autorisé uniquement sur des projets vous appartenant.
