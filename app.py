@@ -33,6 +33,19 @@ def verify_api_key(x_api_key: Optional[str] = Header(None)):
     if expected_key and x_api_key != expected_key:
         raise HTTPException(status_code=401, detail="Accès non autorisé : Clé API invalide ou manquante.")
 
+@app.get("/")
+def root():
+    """Point d'entrée public du service pour éviter le 404 à la racine."""
+    return {
+        "status": "ok",
+        "service": "DevSecAssist API",
+        "version": "0.3.0",
+        "health": "/health",
+        "docs": "/docs",
+        "scan_url": "/scan/url",
+        "scan_file": "/scan/file",
+    }
+
 @app.get("/health")
 def health_check():
     """Endpoint de santé pour Render / Railway / Docker."""
