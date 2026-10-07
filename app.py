@@ -3,10 +3,16 @@ API Web FastAPI pour DevSecAssist (Service Web Public / Microservice de Sécurit
 """
 import os
 import shutil
+import sys
 import tempfile
 import zipfile
 from pathlib import Path
 from typing import Optional
+
+PROJECT_ROOT = Path(__file__).resolve().parent
+SRC_PATH = PROJECT_ROOT / "src"
+if SRC_PATH.exists() and str(SRC_PATH) not in sys.path:
+    sys.path.insert(0, str(SRC_PATH))
 
 from fastapi import FastAPI, UploadFile, File, HTTPException, Header, Query, Depends
 from fastapi.responses import HTMLResponse, JSONResponse
